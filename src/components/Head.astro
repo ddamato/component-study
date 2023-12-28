@@ -1,0 +1,80 @@
+---
+const { 
+  title = 'Do Components Exist?',
+  desc = 'An exploration into quantifying design system measurement ',
+  slug = 'index',
+  date = new Date().toISOString(),
+} = Astro.props;
+
+const ogImage = new URL(`og-images/${slug}.png`, Astro.url.origin).toString();
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "NewsArticle",
+  "headline": title,
+  "image": [ ogImage ],
+  "datePublished": date,
+  "dateModified": date,
+  "author": [{
+    "@type": "Person",
+    "name": "Donnie D'Amato",
+    "url": "https://donnie.damato.design"
+  }]
+};
+---
+
+<head>
+  <meta charset="UTF-8" />
+  <title>{ title }</title>
+  <meta name="viewport" content="width=device-width">
+  <meta name="description" content={ desc } />
+  <meta name="generator" content={ Astro.generator } />
+  <meta property="og:title" content={ title } />
+  <meta property="og:description" content={ desc } />
+  <meta property="og:url" content={ Astro.url } />
+  <meta property="og:image" content={ ogImage } />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content={ title } />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@donniedamato" />
+  <meta name="twitter:creator" content="@donniedamato" />
+  <meta name="twitter:title" content={ title } />
+  <meta name="twitter:description" content={ desc } />
+  <meta name="twitter:image" content={ ogImage } />
+  <meta name="twitter:image:alt" content={ title } />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+
+  { date && <script type="application/ld+json" set:html={JSON.stringify(schema)}/> }
+
+
+  <style is:global>
+    *, *:before, *:after {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Charter, 'Bitstream Charter', 'Sitka Text', Cambria, serif;
+      font-weight: normal;
+      font-size: 12pt;
+      line-height: 1.5;
+      max-width: 70ch;
+      margin: 0 auto;
+      padding: .125in;
+      color: #111;
+    }
+
+    section > p {
+      text-indent: .5in;
+      line-height: 3;
+    }
+    
+    img {
+      max-width: 100%;
+    }
+
+    .footnotes {
+      font-size: .8em;
+    }
+  </style>
+</head>

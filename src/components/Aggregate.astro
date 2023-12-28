@@ -1,0 +1,37 @@
+---
+import path from 'path';
+import { load } from 'cheerio';
+
+const pages = await Astro.glob('../content/pages/*.md');
+
+const sections = pages.reduce((content, page) => {
+  const slug = path.parse(page.file).name;
+  return content + `<section id=${slug}>${page.compiledContent()}</section>`
+}, '');
+
+const $ = load(sections, null, false);
+const footnotes = $('<ol/>').wrapAll('<footer class="footnotes"/>');
+const fnItems = $('.footnotes li');
+fnItems.appendTo(footnotes);
+$('.footnotes').remove();
+$('section:last-child').after(footnotes.parent()).after('<hr/>');
+fnItems.map((index, $elem) => {
+  const ordinal = String(index + 1);
+
+  $(`a[data-footnote-ref]:eq(${index})`).attr({
+      href: `#user-content-fn-${ordinal}`,
+      id: `user-content-fnref-${ordinal}`
+  }).text(ordinal);
+  
+  const $li = $($elem);
+  $li.attr('id', `user-content-fn-${ordinal}`);
+
+  $li.find('a[data-footnote-backref]').attr({
+    href: `#user-content-fnref-${ordinal}`,
+    'aria-label': `Back to reference ${ordinal}`
+  });
+
+});
+---
+
+<Fragment set:html={ $.html() }/>

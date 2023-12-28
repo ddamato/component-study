@@ -11,5 +11,8 @@
   },
   "dependencies": {
     "astro": "^4.0.8"
+  },
+  "devDependencies": {
+    "cheerio": "^1.0.0-rc.12"
   }
 }
