@@ -4,7 +4,11 @@ import { load } from 'cheerio';
 
 const pages = await Astro.glob('../content/pages/*.md');
 
-const sections = pages.reduce((content, page) => {
+function chapters(a, b) {
+  return a.frontmatter.chapter - b.frontmatter.chapter;
+}
+
+const sections = pages.sort(chapters).reduce((content, page) => {
   const slug = path.parse(page.file).name;
   return content + `<section id=${slug}>${page.compiledContent()}</section>`
 }, '');
