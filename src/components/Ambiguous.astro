@@ -35,11 +35,16 @@ const { text, ...rest } = Astro.props;
     transform: translateX(calc(var(--a) * -1));
     display: inline-block;
     caret-color: transparent;
-    line-height: 0;
+    cursor: default;
   }
 
-  ambiguous-component span:focus {
+  ambiguous-component span:not(:empty):focus {
     outline: none;
+  }
+
+  ambiguous-component span:empty {
+    outline: 1px dashed;
+    min-width: 1.65ch;
   }
 </style>
 

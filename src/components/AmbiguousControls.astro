@@ -4,6 +4,21 @@ import Ambiguous from '@components/Ambiguous.astro';
 ---
 
 <style>
+  h1 {
+    font-family: Outfit;
+    font-size: 8em;
+    margin: 0;
+    opacity: 0;
+    transition: .218s 2s ease;
+    text-indent: -.04em;
+    line-height: 1;
+    margin-block-start: -1.5em;
+  }
+
+  h1:hover {
+    opacity: 1;
+  }
+
   figure {
     margin-inline: 0;
   }
@@ -15,19 +30,20 @@ import Ambiguous from '@components/Ambiguous.astro';
 
 <section>
   <figure>
+    <h1>Demo</h1>
     <Ambiguous text="Start Here"/>
   </figure>
   <form>
     <details>
       <summary>
-        <Slider id="all" step=".1">All</Slider>
+        <Slider id="all" step=".1">?</Slider>
       </summary>
-      <Slider id="align">Text Align</Slider>
-      <Slider id="color">Foreground Color</Slider>
       <Slider id="background">Background Color</Slider>
       <Slider id="border">Border</Slider>
       <Slider id="padding">Padding</Slider>
       <Slider id="weight">Font Weight</Slider>
+      <Slider id="color">Foreground Color</Slider>
+      <Slider id="align">Text Align</Slider>
     </details>
   </form>
 </section>
