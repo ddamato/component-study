@@ -1,0 +1,64 @@
+---
+const { text, ...rest } = Astro.props;
+---
+
+<ambiguous-component { ...rest }>
+  <span contenteditable>{ text }</span>
+</ambiguous-component>
+
+<style>
+  @import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap");
+
+  ambiguous-component {
+    font-family: "Outfit", sans-serif;
+    font-optical-sizing: auto;
+    font-size: 2rem;
+    line-height: 1;
+    display: inline-block;
+    width: 10em;
+    border-style: solid;
+    padding-inline: min(var(--padding, 0)/100 * 1em, 1em);
+    padding-block: min(var(--padding, 0)/50 * .25em, .25em);
+    --w: calc((var(--weight, 0) * 8) - 400);
+    font-weight: min(max(var(--w), -1 * var(--w)) + 300, 600);
+    border-width: min(var(--border, 0)/50 * 2px, 2px);
+    border-color: rgba(200, 200, 200, pow(0, max((var(--border, 0) - 50), (-1 * var(--border, 0) - 50))));
+    color: hsl(0deg, 0%, max(0%, (var(--color, 0) - 50)/50 * 100%));
+    --b: calc((((1 - var(--background)/100) + 1) * 100%) - 50%);
+    background: hsl(210deg, 100%, var(--b));
+  }
+
+  ambiguous-component span {
+    position: relative;
+    --a: max(0%, (var(--align, 0) - 50)/100 * 100%);
+    left: var(--a);
+    transform: translateX(calc(var(--a) * -1));
+    display: inline-block;
+    caret-color: transparent;
+    line-height: 0;
+  }
+
+  ambiguous-component span:focus {
+    outline: none;
+  }
+</style>
+
+<script>
+  class AmbiguousComponent extends window.HTMLElement {
+    constructor() {
+      super();
+    }
+
+    static get observedAttributes() {
+      return ['align', 'background', 'color', 'border', 'padding', 'weight']
+    }
+
+    attributeChangedCallback(attr, o, n) {
+      if (this.constructor.observedAttributes.includes(attr)) {
+        this.style.setProperty(`--${attr}`, Number(n).toFixed(0))
+      }
+    }
+  }
+
+  window.customElements.define('ambiguous-component', AmbiguousComponent)
+</script>

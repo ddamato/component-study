@@ -1,0 +1,28 @@
+---
+import Head from '@components/Head.astro';
+import Ambiguous from '@components/AmbiguousControls.astro';
+---
+
+<style>
+	body {
+		margin: 0;
+		max-width: none;
+		padding: 0;
+	}
+
+	main {
+		min-height: 100vh;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+</style>
+
+<html>
+	<Head/>
+	<body>
+		<main>
+			<Ambiguous/>
+		</main>
+	</body>
+</html>

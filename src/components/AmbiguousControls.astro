@@ -1,0 +1,51 @@
+---
+import Slider from '@components/Slider.astro';
+import Ambiguous from '@components/Ambiguous.astro';
+---
+
+<style>
+  figure {
+    margin-inline: 0;
+  }
+
+  summary :global(.slider) {
+    display: inline-flex;
+  }
+</style>
+
+<section>
+  <figure>
+    <Ambiguous text="Start Here"/>
+  </figure>
+  <form>
+    <details>
+      <summary>
+        <Slider id="all" step=".1">All</Slider>
+      </summary>
+      <Slider id="align">Text Align</Slider>
+      <Slider id="color">Foreground Color</Slider>
+      <Slider id="background">Background Color</Slider>
+      <Slider id="border">Border</Slider>
+      <Slider id="padding">Padding</Slider>
+      <Slider id="weight">Font Weight</Slider>
+    </details>
+  </form>
+</section>
+
+<script>
+  const inputs = document.querySelectorAll('input[type="range"]');
+  const figure = document.querySelector('ambiguous-component');
+  inputs.forEach((input) => {
+    input.addEventListener('input', function() {
+      if (this.id !== 'all') {
+        figure.setAttribute(this.id, this.value);
+      } else {
+        figure.constructor.observedAttributes.forEach((attr) => {
+          figure.setAttribute(attr, this.value);
+          const input = document.getElementById(attr);
+          input.value = this.value;
+        })
+      }
+    });
+  })
+</script>
